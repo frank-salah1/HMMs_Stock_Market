@@ -87,7 +87,7 @@ class HMMStockPredictor:
 
     @staticmethod
     def _extract_features(data):
-        """Extract the features - open, close, high, low price - from the Yahooo finance generated dataframe."""
+        """Extract the features - open, close, high, low price - from the Yahoo finance generated dataframe."""
         open_price = np.array(data["Open"])
         close_price = np.array(data["Close"])
         high_price = np.array(data["High"])
