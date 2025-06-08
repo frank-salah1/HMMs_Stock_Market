@@ -1,6 +1,6 @@
-import pytest 
-import sys 
-import os 
+import pytest
+import os
+import pandas as pd
 
 @pytest.fixture
 def company_name():
@@ -27,6 +27,29 @@ def invalid_start_date():
 @pytest.fixture
 def valid_end_date():
     yield "2020-12-05"
+
+
+@pytest.fixture
+def sample_stock_data():
+    dates = pd.date_range("2020-11-01", periods=5, freq="D")
+    data = {
+        "High": [10, 11, 12, 13, 14],
+        "Low": [5, 5, 6, 6, 7],
+        "Open": [9, 10, 11, 12, 13],
+        "Close": [9, 10, 11, 12, 13],
+        "Volume": [100] * 5,
+        "Adj Close": [9, 10, 11, 12, 13],
+    }
+    return pd.DataFrame(data, index=dates)
+
+
+@pytest.fixture
+def mock_datareader(monkeypatch, sample_stock_data):
+    monkeypatch.setattr(
+        "pandas_datareader.data.DataReader",
+        lambda *args, **kwargs: sample_stock_data.copy(),
+    )
+    yield
 
 
 @pytest.fixture

@@ -13,7 +13,9 @@ def test_test():
 
 
 @pytest.mark.large
-def test_stock_analysis_record_metrics(company_name, input_args, cleanup_excel_files):
+def test_stock_analysis_record_metrics(
+    company_name, input_args, cleanup_excel_files, mock_datareader
+):
     input_args.append("-m")
     input_args.append("True")
     # Given, when
@@ -31,7 +33,7 @@ def test_stock_analysis_record_metrics(company_name, input_args, cleanup_excel_f
 
 @pytest.mark.large
 def test_stock_analysis_future_predictions(
-    company_name, input_args, cleanup_excel_files
+    company_name, input_args, cleanup_excel_files, mock_datareader
 ):
     input_args.append("-f")
     input_args.append("5")
@@ -50,7 +52,7 @@ def test_stock_analysis_future_predictions(
 
 @pytest.mark.large
 def test_stock_analysis_plot_image(
-    company_name, input_args, cleanup_images, cleanup_excel_files
+    company_name, input_args, cleanup_images, cleanup_excel_files, mock_datareader
 ):
     input_args.append("-m")
     input_args.append("True")

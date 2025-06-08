@@ -8,7 +8,7 @@ from src import stock_analysis
 
 @pytest.mark.medium
 def test_create_stock_predictor_valid_dates(
-    company_name, valid_start_date, valid_end_date
+    company_name, valid_start_date, valid_end_date, mock_datareader
 ):
     # Given
     stock_predictor = stock_analysis.HMMStockPredictor(
@@ -24,7 +24,7 @@ def test_create_stock_predictor_valid_dates(
 
 @pytest.mark.medium
 def test_create_stock_predictor_invalid_dates(
-    company_name, invalid_start_date, valid_end_date
+    company_name, invalid_start_date, valid_end_date, mock_datareader
 ):
     # Given
     with pytest.raises(ValueError):
