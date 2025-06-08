@@ -3,6 +3,19 @@ import sys
 import os
 import types
 
+# Provide a minimal pandas_datareader stub if the dependency is missing
+try:
+    import pandas_datareader  # type: ignore
+except ImportError:  # pragma: no cover - environment may lack pandas_datareader
+    pandas_datareader = types.ModuleType("pandas_datareader")
+    pdr_data = types.ModuleType("data")
+    def _placeholder(*args, **kwargs):
+        raise RuntimeError("DataReader called without patch")
+    pdr_data.DataReader = _placeholder
+    pandas_datareader.data = pdr_data
+    sys.modules["pandas_datareader"] = pandas_datareader
+    sys.modules["pandas_datareader.data"] = pdr_data
+
 # Provide a minimal hmmlearn stub so importing src.stock_analysis does not fail
 try:
     import hmmlearn  # type: ignore
@@ -97,7 +110,7 @@ def cleanup_images():
 @pytest.fixture
 def patch_data_reader(monkeypatch, sample_stock_data):
     """Patch pandas_datareader to return local sample data."""
-    pdr = pytest.importorskip("pandas_datareader")
+    import pandas_datareader as pdr
     sub = sample_stock_data
     def fake_reader(*args, **kwargs):
         if str(args[2]) == "2020-13-01":
