@@ -5,3 +5,4 @@ hmmlearn
 tqdm
 openpyxl
 pytest
+scikit-learn
