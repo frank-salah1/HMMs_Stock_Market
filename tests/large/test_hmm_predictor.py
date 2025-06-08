@@ -6,12 +6,6 @@ from unittest.mock import patch
 sys.path.append("../../")
 from src import stock_analysis
 
-
-@pytest.mark.large
-def test_test():
-    assert True
-
-
 @pytest.mark.large
 def test_stock_analysis_record_metrics(company_name, input_args, cleanup_excel_files):
     input_args.append("-m")
