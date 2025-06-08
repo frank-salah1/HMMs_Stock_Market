@@ -8,6 +8,8 @@ import itertools
 import pandas as pd
 import numpy as np
 from pandas_datareader import data
+import matplotlib
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from hmmlearn.hmm import GaussianHMM
 from sklearn.model_selection import train_test_split
@@ -254,7 +256,7 @@ class HMMStockPredictor:
         return predicted_close_prices
 
 
-def plot_results(in_df, out_dir, stock_name):
+def plot_results(in_df, out_dir, stock_name, show=False):
     """
     Plots the results for historical predictions
     :param in_df: Pandas Dataframe containing the data, actual close prices, and predicted close prices
@@ -270,7 +272,8 @@ def plot_results(in_df, out_dir, stock_name):
     plt.title(str(stock_name) + " daily closing stock prices")
     save_dir = f"{out_dir}/{stock_name}_results_plot.png"
     plt.savefig(save_dir)
-    plt.show()
+    if show:
+        plt.show()
     plt.close("all")
 
 
@@ -340,7 +343,7 @@ def use_stock_predictor(company_name, start, end, future, metrics, plot, out_dir
 
         # Plot and save results if plot is True
         if plot:
-            plot_results(output_df, out_dir, company_name)
+            plot_results(output_df, out_dir, company_name, show=False)
 
     # Predict for x days into the future
     if future:
