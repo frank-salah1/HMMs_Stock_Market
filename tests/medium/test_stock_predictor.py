@@ -1,7 +1,6 @@
 import pytest
 import sys
 
-print(sys.path)
 sys.path.append("../../")
 from src import stock_analysis
 
