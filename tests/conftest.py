@@ -1,6 +1,19 @@
-import pytest 
-import sys 
-import os 
+import pytest
+import sys
+import os
+
+
+@pytest.fixture
+def sample_stock_data():
+    """Return a small sample DataFrame if pandas is available."""
+    pd = pytest.importorskip("pandas")
+    data = {
+        "Open": [1, 2, 3],
+        "High": [1.5, 2.5, 3.5],
+        "Low": [0.5, 1.5, 2.5],
+        "Close": [1.2, 2.2, 3.2],
+    }
+    return pd.DataFrame(data)
 
 @pytest.fixture
 def company_name():
