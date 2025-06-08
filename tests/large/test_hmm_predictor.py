@@ -4,10 +4,14 @@ import sys
 from unittest.mock import patch
 
 sys.path.append("../../")
-from src import stock_analysis
+
+pytest.importorskip("pandas")
 
 @pytest.mark.large
-def test_stock_analysis_record_metrics(company_name, input_args, cleanup_excel_files):
+def test_stock_analysis_record_metrics(
+    company_name, input_args, cleanup_excel_files, patch_data_reader
+):
+    from src import stock_analysis
     input_args.append("-m")
     input_args.append("True")
     # Given, when
@@ -25,8 +29,9 @@ def test_stock_analysis_record_metrics(company_name, input_args, cleanup_excel_f
 
 @pytest.mark.large
 def test_stock_analysis_future_predictions(
-    company_name, input_args, cleanup_excel_files
+    company_name, input_args, cleanup_excel_files, patch_data_reader
 ):
+    from src import stock_analysis
     input_args.append("-f")
     input_args.append("5")
     # Given, when
@@ -44,8 +49,9 @@ def test_stock_analysis_future_predictions(
 
 @pytest.mark.large
 def test_stock_analysis_plot_image(
-    company_name, input_args, cleanup_images, cleanup_excel_files
+    company_name, input_args, cleanup_images, cleanup_excel_files, patch_data_reader
 ):
+    from src import stock_analysis
     input_args.append("-m")
     input_args.append("True")
     input_args.append("-p")
@@ -61,3 +67,4 @@ def test_stock_analysis_plot_image(
     plots = [file for file in files if file[-4:] == ".png"]
     assert 1 == len(plots)
     assert company_name in plots[0]
+

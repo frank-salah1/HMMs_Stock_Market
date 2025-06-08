@@ -1,5 +1,6 @@
 import pytest
 import sys
+pytest.importorskip("pandas")
 import pandas as pd
 
 sys.path.append("../../")

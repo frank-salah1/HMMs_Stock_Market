@@ -2,13 +2,16 @@ import pytest
 import sys
 
 sys.path.append("../../")
-from src import stock_analysis
+
+pytest.importorskip("pandas")
+
 
 
 @pytest.mark.medium
 def test_create_stock_predictor_valid_dates(
-    company_name, valid_start_date, valid_end_date
+    company_name, valid_start_date, valid_end_date, patch_data_reader
 ):
+    from src import stock_analysis
     # Given
     stock_predictor = stock_analysis.HMMStockPredictor(
         company=company_name,
@@ -23,13 +26,15 @@ def test_create_stock_predictor_valid_dates(
 
 @pytest.mark.medium
 def test_create_stock_predictor_invalid_dates(
-    company_name, invalid_start_date, valid_end_date
+    company_name, invalid_start_date, valid_end_date, patch_data_reader
 ):
+    from src import stock_analysis
     # Given
     with pytest.raises(ValueError):
-        stock_predictor = stock_analysis.HMMStockPredictor(
+        stock_analysis.HMMStockPredictor(
             company=company_name,
             start_date=invalid_start_date,
             end_date=valid_end_date,
             future_days=0,
         )
+
