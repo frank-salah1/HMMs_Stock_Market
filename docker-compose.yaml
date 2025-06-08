@@ -4,7 +4,7 @@ services:
     container_name: stock_analysis
     build: 
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     working_dir: /workarea
     
 
